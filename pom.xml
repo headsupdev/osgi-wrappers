@@ -17,7 +17,7 @@
   <scm>
     <connection>scm:git:git://github.com/headsupdev/osgi-wrappers.git</connection>
     <developerConnection>scm:git:git@github.com:headsupdev/osgi-wrappers.git</developerConnection>
-    <url>http://headsupdev.com:8070/osgi-wrappers/files/</url>
+    <url>http://headsupdev.org/osgi-wrappers/files/</url>
   </scm>
 
   <!--
