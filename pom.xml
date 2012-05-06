@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <groupId>org.headsupdev</groupId>
+    <artifactId>headsupdev-parent</artifactId>
+    <version>3</version>
+  </parent>
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.headsupdev.osgi</groupId>
+  <artifactId>osgi-wrappers</artifactId>
+  <packaging>pom</packaging>
+  <version>2-SNAPSHOT</version>
+
+  <name>HeadsUpDev OSGI Wrappers</name>
+  <scm>
+    <connection>scm:git:git://github.com/headsupdev/osgi-wrappers.git</connection>
+    <developerConnection>scm:git:git@github.com:headsupdev/osgi-wrappers.git</developerConnection>
+    <url>http://headsupdev.com:8070/osgi-wrappers/files/</url>
+  </scm>
+
+  <!--
+   | don't apply project details to wrapped jars
+  -->
+  <organization />
+  <description>OSGi wrapper around third-party jars</description>
+  <licenses>
+    <license />
+  </licenses>
+
+  <modules>
+    <module>opensymphony.quartz</module>
+    <module>commons-logging</module>
+    <module>log4j</module>
+  </modules>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.ops4j</groupId>
+          <artifactId>maven-pax-plugin</artifactId>
+          <!--
+           | enable improved OSGi compilation support for the bundle life-cycle.
+           | to switch back to the standard bundle life-cycle, move this setting
+           | down to the maven-bundle-plugin section
+          -->
+          <extensions>true</extensions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <version>1.4.3</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.ops4j</groupId>
+        <artifactId>maven-pax-plugin</artifactId>
+        <extensions>true</extensions>
+      </plugin>
+
+      <plugin>
+        <!--
+         | the following instructions are optimized for wrapping third-party libraries as OSGi bundles
+        -->
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <configuration>
+          <instructions>
+            <Bundle-SymbolicName>${bundle.symbolicName}</Bundle-SymbolicName>
+            <Bundle-Version>${wrapped.version}</Bundle-Version>
+            <!--
+             | export wrapped contents: don't use Export-Package:* as this bundles everything on the classpath
+            -->
+            <_exportcontents>*</_exportcontents>
+            <Private-Package>!*</Private-Package>
+            <!--
+             | each module can override these defaults in their osgi.bnd file
+            -->
+            <_include>-osgi.bnd</_include>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.osgi.core</artifactId>
+        <version>1.4.0</version>
+        <scope>provided</scope>
+        <optional>true</optional>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.osgi.compendium</artifactId>
+        <version>1.4.0</version>
+        <scope>provided</scope>
+        <optional>true</optional>
+        <exclusions>
+          <exclusion>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>javax.servlet</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <distributionManagement>
+    <repository>
+      <id>headsupdev-external</id>
+      <url>dav:http://headsupdev.org/repository/external/</url>
+    </repository>
+    <site>
+      <id>headsup-site</id>
+      <url>dav:http://headsupdevelopment.org:8070/repository/site/osgi/</url>
+    </site>
+  </distributionManagement>
+</project>

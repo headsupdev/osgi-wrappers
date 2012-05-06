@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <parent>
+    <relativePath>../</relativePath>
+    <groupId>org.headsupdev.osgi</groupId>
+    <artifactId>osgi-wrappers</artifactId>
+    <version>2-SNAPSHOT</version>
+  </parent>
+
+  <properties>
+    <bundle.symbolicName>log4j</bundle.symbolicName>
+    <wrapped.groupId>log4j</wrapped.groupId>
+    <wrapped.artifactId>log4j</wrapped.artifactId>
+    <wrapped.version>1.2.14</wrapped.version>
+  </properties>
+
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>log4j</artifactId>
+  <version>1.2.14</version>
+
+  <name>${bundle.symbolicName} ${wrapped.version} [osgi]</name>
+
+  <packaging>bundle</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>${wrapped.groupId}</groupId>
+      <artifactId>${wrapped.artifactId}</artifactId>
+      <version>${wrapped.version}</version>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+
+</project>

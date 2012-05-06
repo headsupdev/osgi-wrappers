@@ -1,0 +1,15 @@
+#--------------------------------------------------------------------------
+# Use this file to add customized Bnd instructions for the wrapped library
+#--------------------------------------------------------------------------
+
+#
+# this unpacks the contents of the wrapped jar artifact inside the bundle
+# to also inline dependencies of this artifact add Embed-Transitive: true
+#
+Embed-Dependency: *;scope=compile|runtime;type=!pom;inline=true
+
+Export-Package: org.quartz.*
+Import-Package: javax.mail,javax.mail.internet,javax.management,javax.naming,javax.rmi,javax.servlet,javax.servlet.http, \
+ javax.sql,javax.transaction,javax.xml.parsers,org.apache.commons.logging,org.apache.commons.collections,org.xml.sax.*, \
+ !javax.ejb,!javax.jms,!org.apache.commons.beanutils,!org.apache.commons.dbcp,!org.apache.commons.digester,!org.apache.commons.modeler
+
